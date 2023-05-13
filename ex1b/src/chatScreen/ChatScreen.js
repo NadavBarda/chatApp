@@ -5,12 +5,12 @@ import UserItem from './UserItem';
 
 
 function ChatScreen() {
-    
-   
-    const [userList,setUserList] =useState([
-        { username: "Captain", date: "10:32 23.4.23", userImg: "../image/captian.jpg", message : "come to my office please"},
-        { username: "Jack", date: "23:41 22.4.23", userImg: "bla", message : "wake up"},
-        { username: "Terry", date: "6:00 21.4.23", userImg: "../image/captian.jpg", message : "Im about to hit the Gym"}
+
+
+    const [userList, setUserList] = useState([
+        { block: "active block", username: "Captain", date: "10:32 23.4.23", userImg: "../image/captian.jpg", message: "come to my office please", unreadMessage: 0 },
+        { block: "unread block", username: "Jack", date: "23:41 22.4.23", userImg: "bla", message: "wake up", unreadMessage: 2 },
+        { block: "active block", username: "Terry", date: "6:00 21.4.23", userImg: "../image/captian.jpg", message: "Im about to hit the Gym", unreadMessage: 0 }
     ]);
 
 
@@ -65,7 +65,7 @@ function ChatScreen() {
                     </div>
 
                     <div className="chatlist">
-                        <UserItem userList = {userList} />
+                        <UserItem userList={userList} />
                     </div>
 
                 </div>
