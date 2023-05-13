@@ -1,7 +1,20 @@
+import { useState } from 'react';
 import './ChatScreen.css';
+import UserItem from './UserItem';
 //import UserItem from './UserItem';
 
+
 function ChatScreen() {
+    
+   
+    const [userList,setUserList] =useState([
+        { username: "Captain", date: "10:32 23.4.23", userImg: "../image/captian.jpg", message : "come to my office please"},
+        { username: "Jack", date: "23:41 22.4.23", userImg: "bla", message : "wake up"},
+        { username: "Terry", date: "6:00 21.4.23", userImg: "../image/captian.jpg", message : "Im about to hit the Gym"}
+    ]);
+
+
+
     return (
         <div className='container'>
             <button type="button" id="exit-btn"> Log Out</button>
@@ -52,52 +65,7 @@ function ChatScreen() {
                     </div>
 
                     <div className="chatlist">
-
-                        <div className="block active">
-                            <div className="imgBox">
-                                <img src="../image/captian.jpg" alt="" className="cover"></img>
-                            </div>
-                            <div className="details">
-                                <div className="listHead">
-                                    <h4>Captain</h4>
-                                    <p className="date"> 10:32 23.4.23</p>
-                                </div>
-                                <div className="message_p">
-                                    <p> come to my office please </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="block unread">
-                            <div className="imgBox">
-                                <img src="image/jack.jpg" alt="" className="cover"></img>
-                            </div>
-                            <div className="details">
-                                <div className="listHead">
-                                    <h4>Jack </h4>
-                                    <p className="date"> 9:01 23.4.23</p>
-                                </div>
-                                <div className="message_p">
-                                    <p> I have great plan as you know</p>
-                                    <b>2</b>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="block active">
-                            <div className="imgBox">
-                                <img src="image/terry.jpg" alt="" className="cover"></img>
-                            </div>
-                            <div className="details">
-                                <div className="listHead">
-                                    <h4>Terry</h4>
-                                    <p className="date"> 17:53 20.4.23</p>
-                                </div>
-                                <div className="message_p">
-                                    <p> I'm about to hit the Gym  </p>
-                                </div>
-                            </div>
-                        </div>
+                        <UserItem userList = {userList} />
                     </div>
 
                 </div>
