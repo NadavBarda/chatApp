@@ -1,12 +1,11 @@
 import './ChatScreen.css';
-//import UserItem from './UserItem';
+import { UserItem } from './UserItem';
 
 function ChatScreen() {
     return (
         <div className='container'>
             <button type="button" id="exit-btn"> Log Out</button>
             <div className="ChatScreen">
-
                 <div className="leftSide">
 
                     <div className="header">

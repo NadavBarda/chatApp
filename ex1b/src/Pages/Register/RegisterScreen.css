@@ -1,16 +1,15 @@
 .RegisterScreen {
-  width: 25em;
-  margin: auto;
-  height: 44em;
-  padding: 5em;
-  border: 1px;
-  background-color: white;
-  margin-top: 40px;
-  border-radius: 10px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
-  align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25em;
+  height: 40em;
+  margin-top: 40px;
+  border: 1px solid #000;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   gap: 1em;
 }
 
@@ -59,7 +58,7 @@
   border-radius: 4px;
 }
 
-.RegisterScreen .userName{
+.RegisterScreen .userName {
   display: block;
   width: 100%;
   padding: 0.5em;
@@ -102,7 +101,7 @@
   border-radius: 4px;
 }
 
-.RegisterScreen .box{
+.RegisterScreen .box {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -116,4 +115,5 @@
   padding: 10px;
   width: 80%;
   border: 2px solid rgb(86, 52, 108);
+  align-self: center;
 }
