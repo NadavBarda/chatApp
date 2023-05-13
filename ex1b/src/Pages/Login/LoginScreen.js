@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import "./LoginScreen.css";
 
-function LoginScreen() {
+function LoginScreen({ registrationDataRef, setLoginData }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
@@ -11,11 +11,12 @@ function LoginScreen() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    const storedUser = JSON.parse(localStorage.getItem("registrationData"));
+    const storedUser = registrationDataRef.current;
 
     if (storedUser && username === storedUser.username && password === storedUser.password) {
       setFormError("");
-      localStorage.setItem("userToken", `${storedUser.username}`)
+      setLoginData({ username: storedUser.username });
+
       navigate("/chat");
     } else {
       setFormError("Invalid username or password");

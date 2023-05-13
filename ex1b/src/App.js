@@ -1,23 +1,31 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
-import LoginScreen from './loginScreen/LoginScreen';
-import RegisterScreen from "./registerScreen/RegisterScreen";
-import ChatScreen from './chatScreen/ChatScreen';
 
-const PrivateRoute = () => {
-  const isAuth = !!localStorage.getItem('userToken');
-  return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
+import React, { useRef, useState } from "react";
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
+import LoginScreen from './Pages/Login/LoginScreen';
+import RegisterScreen from "./Pages/Register/RegisterScreen";
+import ChatScreen from './Pages/Chat/ChatScreen';
+
+const PrivateRoute = ({ isLoggedIn, ...props }) => {
+  return isLoggedIn ? (
+    <Outlet {...props} />) : (<Navigate to="/login" replace={true} />);
 };
 
 const App = () => {
+  const registrationDataRef = useRef(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const setLoginData = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<PrivateRoute />}>
+        <Route element={<PrivateRoute isLoggedIn={isLoggedIn} />}   >
           <Route path="/chat" element={<ChatScreen />} />
         </Route>
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/register" element={<RegisterScreen />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<LoginScreen registrationDataRef={registrationDataRef} setLoginData={setLoginData} />} />
+        <Route path="/register" element={<RegisterScreen registrationDataRef={registrationDataRef} />} />
       </Routes>
     </BrowserRouter>
   );

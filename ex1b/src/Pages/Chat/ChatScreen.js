@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import './ChatScreen.css';
-import UserItem from './UserItem';
-//import UserItem from './UserItem';
+import { UserItem } from './UserItem';
+
 
 
 function ChatScreen() {
-
 
     const [userList, setUserList] = useState([
         { block: "active block", username: "Captain", date: "10:32 23.4.23", userImg: "../image/captian.jpg", message: "come to my office please", unreadMessage: 0 },
@@ -19,7 +18,6 @@ function ChatScreen() {
         <div className='container'>
             <button type="button" id="exit-btn"> Log Out</button>
             <div className="ChatScreen">
-
                 <div className="leftSide">
 
                     <div className="header">
