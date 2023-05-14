@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import './ChatScreen.css';
-import { UserItem } from './UserItem';
+import UserItem from './UserItem';
+import { Message } from '../../Components/Message/Message';
 
 
 
 function ChatScreen() {
+
+    const [messages, setMessages] = useState([
+        { content: "where are youaaaxx ", time: "17:24" },
+    ]);
+
+    const [chatInput, setChatInput] = useState("");
 
     const [userList, setUserList] = useState([
         { block: "active block", username: "Captain", date: "10:32 23.4.23", userImg: "../image/captian.jpg", message: "come to my office please", unreadMessage: 0 },
@@ -13,11 +20,31 @@ function ChatScreen() {
     ]);
 
 
+    const handleSetMessage = () => {
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+        const minutes = currentTime.getMinutes();
+        const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+        if (chatInput.trim() !== "") {
+
+            const newMessage = {
+
+                time: timeString,
+                content: chatInput,
+                id: messages?.length + 1
+            }
+            setMessages([...messages, newMessage]);
+            
+        }
+        setChatInput("");
+    }
 
     return (
         <div className='container'>
             <button type="button" id="exit-btn"> Log Out</button>
             <div className="ChatScreen">
+
                 <div className="leftSide">
 
                     <div className="header">
@@ -63,7 +90,7 @@ function ChatScreen() {
                     </div>
 
                     <div className="chatlist">
-                        <UserItem userList={userList} />
+                        {userList?.map((data) => <UserItem key={data.user} {...data} />)}
                     </div>
 
                 </div>
@@ -85,20 +112,20 @@ function ChatScreen() {
                     </div>
 
                     <div className="chatBox">
-                        <div className="message my_message">
-                            <p>where are you  <br></br>
-                                <span>17:24</span></p>
-                        </div>
-                        <div className="message friend_message">
-                            <p>I'm about to hit the Gym  <br></br>
-                                <span>17:53</span></p>
-                        </div>
+                        {messages?.map((data) => <Message key={data.id} {...data} />)}
 
                     </div>
 
                     <div className="chat_input">
-                        <button className="sendbtn"> send </button>
-                        <input type="text" placeholder="message..." className=" input_msg" ></input>
+                        <button className="sendbtn"
+                            onClick={handleSetMessage}
+                        > send </button>
+                        <input type="text"
+                            placeholder="message..."
+                            className=" input_msg"
+                            value={chatInput}
+                            onChange={(e) => setChatInput(e.target.value)}
+                        ></input>
                     </div>
 
                 </div>
