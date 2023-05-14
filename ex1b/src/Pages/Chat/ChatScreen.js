@@ -122,7 +122,7 @@ function ChatScreen() {
                         > send </button>
                         <input type="text"
                             placeholder="message..."
-                            className=" input_msg"
+                            className=" input_msg "
                             value={chatInput}
                             onChange={(e) => setChatInput(e.target.value)}
                         ></input>
