@@ -1,8 +1,7 @@
-
 import React, { useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import LoginScreen from './Pages/Login/LoginScreen';
-import RegisterScreen from "./Pages/Register/RegisterScreen";
+import RegisterScreen from './Pages/Register/RegisterScreen';
 import ChatScreen from './Pages/Chat/ChatScreen';
 
 const PrivateRoute = ({ isLoggedIn, ...props }) => {
@@ -21,6 +20,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={isLoggedIn ? <Navigate to="/chat" /> : <Navigate to="/login" />} />
         <Route element={<PrivateRoute isLoggedIn={isLoggedIn} />}   >
           <Route path="/chat" element={<ChatScreen />} />
         </Route>

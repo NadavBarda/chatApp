@@ -1,23 +1,23 @@
+
 import { useState } from 'react';
 import './ChatScreen.css';
 import UserItem from './UserItem';
 import { Message } from '../../Components/Message/Message';
 
 
-
 function ChatScreen() {
 
-    const [messages, setMessages] = useState([
-        { content: "where are youaaaxx ", time: "17:24" },
-    ]);
+    const storedUser = localStorage.getItem('currentUser');
+    const user = storedUser ? JSON.parse(storedUser) : null;
 
     const [chatInput, setChatInput] = useState("");
-
-    const [userList, setUserList] = useState([
-        { block: "active block", username: "Captain", date: "10:32 23.4.23", userImg: "../image/captian.jpg", message: "come to my office please", unreadMessage: 0 },
-        { block: "unread block", username: "Jack", date: "23:41 22.4.23", userImg: "bla", message: "wake up", unreadMessage: 2 },
-        { block: "active block", username: "Terry", date: "6:00 21.4.23", userImg: "../image/captian.jpg", message: "Im about to hit the Gym", unreadMessage: 0 }
-    ]);
+    const [userList, setUserList] = useState([]);
+    const [currentFriend, setCurrentFriend] = useState("");
+    const [messages, setMessages] = useState([{ id: "terry", content: "hi", time: "12.3523241" }]);
+    // const [messages, setMessages] = useState([{ id: "terry", content: "hi", time: "12.3523241" }]);
+    const handleChat = () => {
+        const chatMessage = messages.filter(message => message.id === currentFriend);
+    }
 
 
     const handleSetMessage = () => {
@@ -35,23 +35,24 @@ function ChatScreen() {
                 id: messages?.length + 1
             }
             setMessages([...messages, newMessage]);
-            
+
         }
         setChatInput("");
     }
 
+
     return (
         <div className='container'>
-            <button type="button" id="exit-btn"> Log Out</button>
+            <button type="button" id="exit-btn" > Log Out</button>
             <div className="ChatScreen">
 
                 <div className="leftSide">
 
                     <div className="header">
                         <div className="userimg">
-                            <img src="image/minions.webp" alt="user img" className="cover"></img>
+                            <img src={user.userImg} alt="user img" className="cover"></img>
                         </div>
-                        <div className="username"> bar foo </div>
+                        <div className="username"> {user.displayName} </div>
                         <ul className="icons">
                             <li>
                                 <button type="button" className="btn btn-primary myfile" data-toggle="modal" data-target="#addModal">
@@ -78,7 +79,7 @@ function ChatScreen() {
 
 
                                             <div className="modal-footer">
-                                                <button type="button" className="btn btn-primary">Add</button>
+                                                <button type="button" onc className="btn btn-primary">Add</button>
                                             </div>
 
                                         </div>
@@ -89,9 +90,13 @@ function ChatScreen() {
                         </ul>
                     </div>
 
+                    {/* CHATLIST */}
+
                     <div className="chatlist">
+                        {userList.length === 0 ? <div>add new people</div> : null}
                         {userList?.map((data) => <UserItem key={data.user} {...data} />)}
                     </div>
+
 
                 </div>
 
@@ -111,9 +116,11 @@ function ChatScreen() {
                         </div>
                     </div>
 
+
+                    {/* MESSAGE */}
+
                     <div className="chatBox">
                         {messages?.map((data) => <Message key={data.id} {...data} />)}
-
                     </div>
 
                     <div className="chat_input">

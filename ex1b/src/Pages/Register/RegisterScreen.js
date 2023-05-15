@@ -1,7 +1,10 @@
 import './RegisterScreen.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import myImage from '../../image/minions.webp';
 import { useNavigate, Link } from "react-router-dom";
+import users from './users';
+
+
 
 const RegisterScreen = ({ registrationDataRef }) => {
 
@@ -9,33 +12,55 @@ const RegisterScreen = ({ registrationDataRef }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [formError, setFormError] = useState("");
+  const [passwordMessage, setPasswordMessage] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const userImg = myImage;
   const [selctedImage, setSelctedImage] = useState(myImage);
-
+  
   const navigate = useNavigate();
+
+  const handlePassword = (password) => {
+    setPassword(password);
+    console.log(password);
+    if (!validatePassword(password)) {
+      setPasswordMessage("Please enter a valid password");
+    }
+    else {
+      setPasswordMessage("");
+    }
+
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
+  
     if (password !== confirmPassword) {
       setFormError("Passwords do not match");
       return;
     }
+  
     if (username.trim() === displayName.trim()) {
       setFormError("Username and display name cannot be the same.");
       return;
     }
-    if (!validatePassword(password)) {
-      setFormError("Password must contain at least 8 characters, including at least one letter and one digit.");
-      return;
-    }
-
+  
     setFormError("");
-    // localStorage.setItem('registrationData', JSON.stringify({ username, password, displayName, selctedImage }));
-    registrationDataRef.current = { username, password, displayName, selctedImage };
-    console.log(registrationDataRef.current)
+
+    const newUser = {
+      username: username,
+      password: password,
+      confirmPassword: confirmPassword,
+      displayName: displayName,
+      userImg: selctedImage,
+    };
+    
+    users.push(newUser);
+    console.log("New user added:", newUser);
+
 
     navigate("/login");
   };
+
   const isFormFilled = () => {
     return username && password && confirmPassword && displayName;
   }
@@ -43,14 +68,16 @@ const RegisterScreen = ({ registrationDataRef }) => {
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-
-    reader.onloadend = () => setSelctedImage(reader.result);
-
-    if (file) {
-      reader.readAsDataURL(file);
+  
+    if (!file.type.match('image.*')) {
+      setFormError("Please upload an image.");
+      return;
     }
+  
+    reader.onloadend = () => setSelctedImage(reader.result);
+  
+    reader.readAsDataURL(file);
   };
-
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     return passwordRegex.test(password);
@@ -81,9 +108,11 @@ const RegisterScreen = ({ registrationDataRef }) => {
             required
             pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handlePassword(e.target.value)}
           />
         </div>
+
+        {passwordMessage && <span className='errorMessage'>{passwordMessage}</span>}
         <div className="form-field">
           <label htmlFor="confirm-password"></label>
           <input
@@ -112,7 +141,7 @@ const RegisterScreen = ({ registrationDataRef }) => {
         <div className="upload-box">
           <span className="box">
             <label htmlFor="file-upload">Picture:</label>
-            <img src={selctedImage} className="image-preview"></img>
+            <img src={selctedImage} alt='userImg' className="image-preview"></img>
           </span>
           <input
             required
