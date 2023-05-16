@@ -70,6 +70,7 @@
   width: 200px;
   background-color: rgb(205, 189, 221);
 }
+
 .LoginScreen .errorMessage {
   color: red;
 }

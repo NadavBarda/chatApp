@@ -1,8 +1,11 @@
+
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import TextInput from "../../Components/RegisterScreen/TextInput";
+import PasswordMessage from "../../Components/RegisterScreen/PasswordMessage";
 import "./LoginScreen.css";
 
-function LoginScreen({ registrationDataRef, setLoginData }) {
+function LoginScreen({ myUserRef }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
@@ -11,11 +14,14 @@ function LoginScreen({ registrationDataRef, setLoginData }) {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    const storedUser = registrationDataRef.current;
+    const storedData = localStorage.getItem("registerUsers");
+    const registeredUsers = storedData ? JSON.parse(storedData) : [];
+    const user = registeredUsers.find((user) => user.username === username);
 
-    if (storedUser && username === storedUser.username && password === storedUser.password) {
+    if (user && user.password === password) {
       setFormError("");
-      setLoginData({ username: storedUser.username });
+      localStorage.setItem("userLogin", `${user.username}`)
+      myUserRef.current = user;
       navigate("/chat");
     } else {
       setFormError("Invalid username or password");
@@ -35,32 +41,27 @@ function LoginScreen({ registrationDataRef, setLoginData }) {
     <div className="LoginScreen">
       <h1 id="logintitle">Login</h1>
       <form onSubmit={handleLogin} className="form">
-        <div className="form-field">
-          <label htmlFor="username"></label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Type your user name"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="form-field">
-          <label htmlFor="password"></label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            min={8}
-            placeholder="Enter password"
-            required
-            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        <TextInput
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Type your username"
+          required
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextInput
+          type="password"
+          id="password"
+          name="password"
+          min={8}
+          placeholder="Enter password"
+          required
+          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {formError && <PasswordMessage message={formError} />}
         <button id="buttonlogin" type="submit" disabled={!isFormValid()}>
           Login
         </button>{" "}
@@ -68,7 +69,6 @@ function LoginScreen({ registrationDataRef, setLoginData }) {
           Not registered? <Link to="/register">Click here</Link> to register
         </span>
       </form>
-      {formError && <span className='errorMessage'>{formError}</span>}
     </div>
   );
 }

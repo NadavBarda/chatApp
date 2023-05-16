@@ -1,144 +1,109 @@
+
+import React, { useState, useRef } from 'react';
 import './ChatScreen.css';
-import { UserItem } from './UserItem';
+import UserItem from './UserItem';
+import { useNavigate } from 'react-router-dom';
+import { Message } from '../../Components/Message/Message';
+import ChatBox from '../../Components/ChatBox/ChatBox';
+import AddContactModal from '../../Components/ChatScreen/AddContactModal';
+import ChatInput from '../../Components/ChatScreen/ChatInput';
+import ChatListPanel from '../../Components/ChatScreen/ChatListPanel';
+import Header from '../../Components/ChatScreen/Header';
 
-function ChatScreen() {
-    return (
-        <div className='container'>
-            <button type="button" id="exit-btn"> Log Out</button>
-            <div className="ChatScreen">
-                <div className="leftSide">
+function ChatScreen({ myUserRef }) {
+  const navigate = useNavigate();
 
-                    <div className="header">
-                        <div className="userimg">
-                            <img src="image/minions.webp" alt="user img" className="cover"></img>
-                        </div>
-                        <div className="username"> bar foo </div>
-                        <ul className="icons">
-                            <li>
-                                <button type="button" className="btn btn-primary myfile" data-toggle="modal" data-target="#addModal">
-                                    <ion-icon name="person-add-outline"></ion-icon>
-                                </button>
-                                <div className="modal" id="addModal">
-                                    <div className="modal-dialog">
-                                        <div className="modal-content">
+  const myUser = myUserRef.current || {}; // Provide a default empty object if myUserRef is null
 
-                                            <div className="modal-header">
-                                                <h4 className="modal-title">Add new contact</h4>
-                                                <button type="button" className="close" data-dismiss="modal">&times;</button>
-                                            </div>
+  const [chatInput, setChatInput] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [contactChat, setContactChat] = useState(null);
+  const [chatList, setChatList] = useState([]);
 
+  const handleContactSwitch = (name) => {
+    const chat = chatList.find((chat) => chat.username === name);
+    setContactChat(chat);
+    setMessages(chat.messages);
+  };
 
-                                            <div className="modal-body">
-                                                <form>
-                                                    <div className="form-group">
-                                                        <label htmlFor="name">Name:</label>
-                                                        <input type="text" className="form-control" id="name" placeholder="Name or Phone number"></input>
-                                                    </div>
-                                                </form>
-                                            </div>
+  const handleNewContact = () => {
+    const contactName = document.getElementById('name').value;
+    document.getElementById('name').value = '';
+    const user = chatList.find((contact) => contact.username === contactName);
 
+    if (user) {
+      handleContactSwitch(contactName);
+      return;
+    }
 
-                                            <div className="modal-footer">
-                                                <button type="button" className="btn btn-primary">Add</button>
-                                            </div>
+    const newContact = {
+      username: contactName,
+      userImg: '',
+      block: 'block active',
+      messages: [],
+      unreadMessage: 0,
+    };
 
-                                        </div>
-                                    </div>
-                                </div>
+    setChatList([newContact, ...chatList]);
+    setMessages(newContact.messages);
+    setContactChat(newContact);
+  };
 
-                            </li>
-                        </ul>
-                    </div>
+  const handleLogOut = () => {
+    localStorage.removeItem('userLogin');
+    navigate('/login');
+  };
 
-                    <div className="chatlist">
+  const handleSetMessage = () => {
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    const timeString = `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}`;
 
-                        <div className="block active">
-                            <div className="imgBox">
-                                <img src="../image/captian.jpg" alt="" className="cover"></img>
-                            </div>
-                            <div className="details">
-                                <div className="listHead">
-                                    <h4>Captain</h4>
-                                    <p className="date"> 10:32 23.4.23</p>
-                                </div>
-                                <div className="message_p">
-                                    <p> come to my office please </p>
-                                </div>
-                            </div>
-                        </div>
+    if (chatInput.trim() !== '') {
+      const newMessage = {
+        date: timeString,
+        content: chatInput,
+        id: messages.length + 1,
+      };
+      contactChat.messages.push(newMessage);
+    }
+    setChatInput('');
+  };
 
-                        <div className="block unread">
-                            <div className="imgBox">
-                                <img src="image/jack.jpg" alt="" className="cover"></img>
-                            </div>
-                            <div className="details">
-                                <div className="listHead">
-                                    <h4>Jack </h4>
-                                    <p className="date"> 9:01 23.4.23</p>
-                                </div>
-                                <div className="message_p">
-                                    <p> I have great plan as you know</p>
-                                    <b>2</b>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="block active">
-                            <div className="imgBox">
-                                <img src="image/terry.jpg" alt="" className="cover"></img>
-                            </div>
-                            <div className="details">
-                                <div className="listHead">
-                                    <h4>Terry</h4>
-                                    <p className="date"> 17:53 20.4.23</p>
-                                </div>
-                                <div className="message_p">
-                                    <p> I'm about to hit the Gym  </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div className="rightSide">
-
-                    <div className="header">
-                        <div className="imgText">
-                            <div className="userimg">
-                                <img src="image/terry.jpg" alt="" className="cover"></img>
-                            </div>
-                            <h4> Terry<br></br><span>online</span></h4>
-                        </div>
-                        <div className="file">
-                            <button type="button" className="btn btn-primary myfile" data-toggle="modal" data-target="">
-                                <ion-icon name="folder-outline"></ion-icon>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="chatBox">
-                        <div className="message my_message">
-                            <p>where are you  <br></br>
-                                <span>17:24</span></p>
-                        </div>
-                        <div className="message friend_message">
-                            <p>I'm about to hit the Gym  <br></br>
-                                <span>17:53</span></p>
-                        </div>
-
-                    </div>
-
-                    <div className="chat_input">
-                        <button className="sendbtn"> send </button>
-                        <input type="text" placeholder="message..." className=" input_msg" ></input>
-                    </div>
-
-                </div>
-
-            </div>
+  return (
+    <div className="container">
+      <button type="button" id="exit-btn" onClick={handleLogOut}>
+        Log Out
+      </button>
+      <div className="ChatScreen">
+        <div className="leftSide">
+          <Header myUser={myUser} />
+          {chatList.length > 0 && (
+            <ChatListPanel
+              chatList={chatList}
+              handleContactSwitch={handleContactSwitch}
+            />
+          )}
         </div>
-    );
+        <div className="rightSide">
+          {contactChat && <ChatBox contactChat={contactChat} />}
+          <div className="chatBox">
+            {messages.map((message) => (
+              <Message key={message.id} {...message} />
+            ))}
+          </div>
+          <ChatInput chatInput={chatInput}
+            setChatInput={setChatInput}
+            handleSetMessage={handleSetMessage}
+          />
+        </div>
+      </div>
+      <AddContactModal handleNewContact={handleNewContact} />
+    </div>
+  );
 }
 
 export default ChatScreen;
