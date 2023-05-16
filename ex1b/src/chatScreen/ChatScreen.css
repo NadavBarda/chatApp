@@ -1,11 +1,10 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-body{
+body {
   display: flex;
   justify-content: center;
   background-repeat: no-repeat;
@@ -13,10 +12,9 @@ body{
   min-height: 100vh;
 }
 
-.ChatScreen
-{
+.ChatScreen {
   margin-top: 50px;
-  position:relative;
+  position: relative;
   width: 100vw;
   max-width: 1000px;
   height: 90vh;
@@ -26,26 +24,23 @@ body{
   border-radius: 20px;
 }
 
-.ChatScreen .leftSide
-{
+.ChatScreen .leftSide {
   position: relative;
-  
   background-color: aliceblue;
-  border-right: 1px solid rgba(0, 0,0, 0.2);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
   flex: 30%;
   border-radius: 20px;
 }
 
-.ChatScreen .rightSide
-{
+.ChatScreen .rightSide {
   position: relative;
   flex: 70%;
   background-color: rgb(203, 235, 250);
   border-radius: 20px;
+  overflow: auto;
 }
 
-.ChatScreen .header
-{
+.ChatScreen .header {
   position: relative;
   width: 100%;
   height: 40px;
@@ -59,8 +54,9 @@ body{
   border-top-left-radius: 20px;
 }
 
-.ChatScreen .userimg{
 
+
+.ChatScreen .userimg {
   position: relative;
   height: 40px;
   width: 40px;
@@ -70,9 +66,9 @@ body{
   overflow: hidden;
 }
 
-.ChatScreen .username{
+.ChatScreen .username {
   font-weight: bold;
-  position: relative;  
+  position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -80,7 +76,7 @@ body{
   flex: 1;
 }
 
-.ChatScreen .cover{
+.ChatScreen .cover {
   position: absolute;
   top: 0;
   left: 0;
@@ -90,12 +86,11 @@ body{
   border-radius: 50%;
 }
 
-.ChatScreen .icons{
+.ChatScreen .icons {
   font-size: 20px;
   display: flex;
 }
-.ChatScreen .icons li{
-
+.ChatScreen .icons li {
   list-style: none;
   cursor: pointer;
   margin-left: 20px;
@@ -103,31 +98,34 @@ body{
   font-size: 1.2em;
 }
 
-.ChatScreen .chatlist{
+.ChatScreen .chatlist {
   position: relative;
   height: calc(100% - 100px);
   overflow: hidden;
   width: 300px;
 }
-.ChatScreen .chatlist .block{
+.ChatScreen .chatlist .block {
   position: relative;
   width: 300px;
   display: flex;
   align-items: center;
   padding: 15px;
-  border-bottom: 1px solid rgba(0, 0,0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   cursor: pointer;
   height: 70px;
 }
 
-.ChatScreen .chatlist .block .active{
+.ChatScreen .chatlist .block .active {
   background-color: rgb(240, 252, 255);
 }
-.ChatScreen .chatlist .block:hover{
+.ChatScreen .chatlist .block:hover {
   background-color: rgb(253, 253, 253);
 }
+.ChatScreen .chatlist {
+  gap: 1em;
+}
 
-.ChatScreen .chatlist .block .imgBox{
+.ChatScreen .chatlist .block .imgBox {
   position: relative;
   min-width: 45px;
   height: 45px;
@@ -136,52 +134,51 @@ body{
   margin-right: 10px;
 }
 
-.ChatScreen .chatlist .block .details{
+.ChatScreen .chatlist .block .details {
   position: relative;
   width: 220px;
   max-width: 220px;
-  
 }
 
-.ChatScreen .chatlist .block .details .listHead{
+.ChatScreen .chatlist .block .details .listHead {
   display: flex;
-  justify-content: space-between;   
+  justify-content: space-between;
 }
-.ChatScreen .chatlist .block .details .listHead h4{
+.ChatScreen .chatlist .block .details .listHead h4 {
   padding-top: 10px;
   font-size: 1.1em;
   font-weight: bold;
 }
 
-.ChatScreen .chatlist .block .details .listHead .date{
+.ChatScreen .chatlist .block .details .listHead .date {
   font-size: 0.8em;
   font-weight: bold;
   padding-top: 10px;
 }
 
-.ChatScreen .chatlist .block.unread .details .listHead .date{
+.ChatScreen .chatlist .block.unread .details .listHead .date {
   font-size: 0.8em;
   font-weight: bold;
   padding-top: 10px;
-  color: rgb(10, 170, 10); 
+  color: rgb(10, 170, 10);
 }
 
-.ChatScreen .message_p{
+.ChatScreen .message_p {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.ChatScreen .message_p p{
+.ChatScreen .message_p p {
   color: rgb(129, 129, 129);
   font-size: 1em;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap
+  white-space: nowrap;
 }
 
-.ChatScreen .message_p b{
+.ChatScreen .message_p b {
   background-color: rgb(12, 196, 12);
   width: 22px;
   height: 22px;
@@ -190,57 +187,62 @@ body{
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
-  margin-left: 20px; 
+  margin-left: 20px;
 }
 
 /* Right side */
 
-.ChatScreen .imgText{
+.ChatScreen .imgText {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.ChatScreen .imgText h4{
+.ChatScreen .imgText h4 {
   font-weight: 500;
   font-size: 0.75em;
   line-height: 1.2em;
   margin-left: 15px;
 }
 
-.ChatScreen .myfile{
+.ChatScreen .myfile {
   color: black;
   background-color: rgb(113, 186, 250);
   border: none;
 }
-.ChatScreen .myfile:hover{
-  background: linear-gradient(to right, #240a96 0%, #870aa0 40%, #870aa0 60%, #bd1e93 100%);
+.ChatScreen .myfile:hover {
+  background: linear-gradient(
+    to right,
+    #240a96 0%,
+    #870aa0 40%,
+    #870aa0 60%,
+    #bd1e93 100%
+  );
   color: black;
   border: none;
 }
 
-
-.ChatScreen .imgText h4 span{
+.ChatScreen .imgText h4 span {
   font-weight: 400;
   font-size: 0.85em;
   line-height: 1.2em;
 }
 
-.ChatScreen .chatBox{
+.ChatScreen .chatBox {
   position: relative;
   width: 100%;
   padding: 30px;
   overflow-y: auto;
 }
-.ChatScreen .message{
+.ChatScreen .message {
   position: relative;
   display: flex;
   width: 100%;
   margin: 5px 0;
 }
 
-.ChatScreen .message p{
+.ChatScreen .message p {
   position: relative;
   text-align: left;
   max-width: 35%;
@@ -250,13 +252,11 @@ body{
   background-color: rgba(200, 44, 231, 0.301);
   border-radius: 5px;
   display: flex;
-  
 }
 
-.ChatScreen .chat_input button{
+.ChatScreen .chat_input button {
   white-space: nowrap;
   float: left;
-  
 }
 .ChatScreen .chat_input {
   width: 100%;
@@ -264,11 +264,11 @@ body{
   overflow: hidden;
 }
 
-.ChatScreen .friend_message p{
+.ChatScreen .friend_message p {
   background-color: rgba(64, 25, 207, 0.473);
 }
 
-.ChatScreen .message p span{
+.ChatScreen .message p span {
   color: rgb(100, 100, 100);
   position: absolute;
   bottom: 0;
@@ -276,8 +276,7 @@ body{
   display: block;
 }
 
-
-.container #exit-btn{
+.container #exit-btn {
   position: absolute;
   right: 0;
   top: 0;
@@ -293,15 +292,15 @@ body{
   background-color: #ddd;
 }
 
-.ChatScreen .my_message{
+.ChatScreen .my_message {
   justify-content: flex-start;
 }
 
-.ChatScreen .friend_message{
+.ChatScreen .friend_message {
   justify-content: flex-end;
 }
 
-.ChatScreen .rightSide .chat_input{
+.ChatScreen .rightSide .chat_input {
   white-space: nowrap;
   position: absolute;
   width: 100%;
@@ -315,7 +314,9 @@ body{
 
 .ChatScreen .input_msg {
   box-sizing: border-box;
-  width: calc(100% - 80px); /* adjust the width to account for the button and margin */
+  width: calc(
+    100% - 80px
+  ); /* adjust the width to account for the button and margin */
   float: left;
   padding: 5px;
   margin: 0;
@@ -323,13 +324,12 @@ body{
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
   outline: none;
-  
 }
 
-.ChatScreen .sendbtn{
+.ChatScreen .sendbtn {
   float: left;
   background-color: rgba(200, 44, 231, 0.599);
-  border:none;
+  border: none;
   font-weight: 500;
   padding-right: 10px;
   padding-left: 10px;
@@ -339,7 +339,12 @@ body{
   border-top-left-radius: 10px;
   text-align: center;
 }
-.ChatScreen .sendbtn:hover{
-  background: linear-gradient(to right, #240a96 0%, #870aa0 40%, #870aa0 60%, #bd1e93 100%);
+.ChatScreen .sendbtn:hover {
+  background: linear-gradient(
+    to right,
+    #240a96 0%,
+    #870aa0 40%,
+    #870aa0 60%,
+    #bd1e93 100%
+  );
 }
-
