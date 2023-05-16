@@ -70,11 +70,6 @@
   width: 200px;
   background-color: rgb(205, 189, 221);
 }
-body {
-  background-image: url("../image/background.webp");
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
 .LoginScreen .errorMessage {
   color: red;

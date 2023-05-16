@@ -1,0 +1,28 @@
+.message_container {
+  text-align: left;
+  padding: 0.5em;
+  max-width: 16em;
+  background-color: rgba(200, 44, 231, 0.301);
+  border-radius: 5px;
+  display: flex;
+  
+}
+
+.message_container .block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Add this line */
+  
+}
+
+.message_container .block .content {
+  display: flex;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.message_container .block .time {
+  align-self: flex-end;
+  font-size: smaller;
+}
